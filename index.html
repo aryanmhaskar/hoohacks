@@ -67,11 +67,8 @@
         document.getElementById('analyze-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const url = document.getElementById('url').value;
-            document.getElementById('bias-result').innerHTML = '<span class="animate-pulse-slow text-yellow-400">Analyzing...</span>';
-            setTimeout(() => {
-                document.getElementById('bias-result').textContent = "This article has a moderate bias.";
-                document.getElementById('result').classList.remove('hidden');
-            }, 2000);
+            localStorage.setItem('articleUrl', url);
+            window.location.href = 'analyze.html';
         });
     </script>
 </body>
