@@ -101,11 +101,8 @@ def extract_text(soup):
 
 def format_output(authors, title, text):
     # Format the output as requested
-    formatted_output = f"""
-Authors: {authors}
-Title: {title}
-Text: {text}
-"""
+    dictionary = {"authors":authors, "title":title, "text":text}
+    formatted_output = dictionary
     return formatted_output
 
 # Example Usage

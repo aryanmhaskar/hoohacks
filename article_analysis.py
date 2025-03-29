@@ -1,60 +1,90 @@
 from secret import API_KEY
 from openai import OpenAI
 from scraper import scrape_article
+import re
 
 YOUR_API_KEY = API_KEY
 
-messages = [
-    {
-        "role": "system",
-        "content": (
-            """
-You are a bot designed to help users become aware of political bias in the news media. You will receive input data including the title/source of the article, the authors of the article, and the text of the article. Analyze the language of the article, and score it from 10L to 10R where 10L is extremely far left (liberal), 10R is extremely far right (conservative), and 0 is overall neutral article. Analyze the factual correctness of the article and score it from 0 to 10. Assign the authors based on their history and background a score on how much they politically lean. Assign the publishing site a score on political bias based on history. Then recommend articles on the same topic, but from a more diverse array of political bias (let's say the article was very far right leaning, provide a moderate right article, a neutral article, moderate left, and extremely far left).
-You will receive inputs in the following format: “
-Authors: [Author1, Author 2, Author n]
-Title: [Title] 
-Text: [Text}
-“
-All of your outputs will be in the following format, your response to the chat should not have any extraneous words outside of this format: “
-Political Bias Score: [Score]
-Rationale: [Rationale WITH quotes]
-Factual Correctness Score: [Score]
-Rationale: [Rationale WITH quotes]
-Author Political Bias Score: [Score]
-Rationale: [Rationale WITH quotes]
-Publishing Site Bias Score: [Score]
-Rationale: [Rationale WITH quotes]
-Far Right Article Recommendation: [article link]
-Moderate Right Article Recommendation: [article link]
-Neutral Article Recommendation: [article link]
-Moderate Left Article Recommendation: [article link]
-Far Left Article Recommendation: [article link]
-“
-            """
-        ),
-    },
-    {   
-        "role": "user",
-        "content": (
-            scrape_article("https://www.foxnews.com/us/feds-alert-tesla-global-day-action-after-nationwide-violence-leads-arrests")
-        ),
-    },
-]
+def format_bias_analysis(article_data):
+    client = OpenAI(api_key=YOUR_API_KEY, base_url="https://api.perplexity.ai")
+    
+    system_prompt = """Analyze news articles using these methodologies:
+1. Bias Scoring (-42 to +42 scale from Ad Fontes Media)
+2. Factual Reliability (0-64 scale from Media Bias Chart)
+3. Author Bias History (AllSides Media methodology)
+4. Publisher Bias Rating (Ground News aggregation)
 
-client = OpenAI(api_key=YOUR_API_KEY, base_url="https://api.perplexity.ai")
+For each score, include 2-3 direct quotes from the text supporting the assessment. Recommend alternative articles using these sources:
+- Far Right: Breitbart, Daily Wire
+- Moderate Right: Wall Street Journal, The Hill
+- Neutral: Reuters, Associated Press
+- Moderate Left: NPR, Washington Post
+- Far Left: Jacobin, The Intercept"""
 
-# chat completion without streaming
-response = client.chat.completions.create(
-    model="sonar-pro",
-    messages=messages,
-)
-print(response)
+    try:
+        response = client.chat.completions.create(
+            model="sonar-pro",
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": f"""
+                    Analyze this article:
+                    Authors: {article_data['authors']}
+                    Title: {article_data['title']}
+                    Text: {article_data['text'][:3000]}...
+                    """
+                }
+            ]
+        )
+        print(response)
+        print(response.choices[0].message.content)
+        return parse_response(response.choices[0].message.content)
+    
+    except Exception as e:
+        return f"Analysis Error: {str(e)}"
 
-# chat completion with streaming
-response_stream = client.chat.completions.create(
-    model="sonar-pro",
-    messages=messages,
-    stream=True,
-)
-for response in response_stream:
-    print(response)
+def parse_response(response_text):
+    pattern = r"""
+    Political\sBias\sScore:\s*(-?\d+\.?\d*)
+    Rationale:\s*(.*?)
+    Factual\sCorrectness\sScore:\s*(\d+\.?\d*)
+    Rationale:\s*(.*?)
+    Author\sPolitical\sBias\sScore:\s*(-?\d+\.?\d*)
+    Rationale:\s*(.*?)
+    Publishing\sSite\sBias\sScore:\s*(-?\d+\.?\d*)
+    Rationale:\s*(.*?)
+    Far\sRight\sArticle\sRecommendation:\s*(.*?)
+    Moderate\sRight\sArticle\sRecommendation:\s*(.*?)
+    Neutral\sArticle\sRecommendation:\s*(.*?)
+    Moderate\sLeft\sArticle\sRecommendation:\s*(.*?)
+    Far\sLeft\sArticle\sRecommendation:\s*(.*?)
+    """
+    
+    match = re.search(pattern, response_text, re.DOTALL|re.VERBOSE)
+    
+    if not match:
+        return "Failed to parse analysis response"
+    
+    return {
+        "Political Bias Score": float(match.group(1)),
+        "Factual Correctness Score": float(match.group(3)),
+        "Author Bias Score": float(match.group(5)),
+        "Publisher Bias Score": float(match.group(7)),
+        "Recommendations": {
+            "Far Right": match.group(9).strip(),
+            "Moderate Right": match.group(10).strip(),
+            "Neutral": match.group(11).strip(),
+            "Moderate Left": match.group(12).strip(),
+            "Far Left": match.group(13).strip()
+        }
+    }
+
+# Example usage
+article_data = scrape_article("https://www.foxnews.com/us/feds-alert-tesla-global-day-action-after-nationwide-violence-leads-arrests")
+print(article_data)
+analysis = format_bias_analysis(article_data)
+print(analysis)
