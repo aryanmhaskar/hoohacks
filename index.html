@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Political Bias Compass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .animate-pulse-slow {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-gray-700 via-gray-900 to-black font-roboto text-white">
+    <div class="min-h-screen flex flex-col items-center justify-center px-4">
+        <header class="text-center mb-8">
+            <h1 class="text-5xl font-bold text-indigo-400 drop-shadow-lg">Welcome to Political Bias Compass</h1>
+            <p class="mt-2 text-gray-300 text-lg">See the Other Side</p>
+        </header>
+        <main class="w-full max-w-md glass p-8 rounded-lg shadow-lg">
+            <form class="space-y-4" id="analyze-form">
+                <div>
+                    <label class="block text-sm font-medium" for="url">Article URL</label>
+                    <input class="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-700 text-white transition-all duration-300 ease-in-out hover:border-indigo-400" id="url" name="url" placeholder="Enter the URL of the news article" required type="url"/>
+                </div>
+                <div>
+                    <button class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 transform hover:scale-105 transition-transform duration-200" type="submit">
+                        Analyze
+                    </button>
+                </div>
+            </form>
+            <div class="mt-6 hidden text-center" id="result">
+                <h2 class="text-xl font-bold">Analysis Result</h2>
+                <p class="mt-2 text-lg" id="bias-result"></p>
+            </div>
+        </main>
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold text-center mb-4 text-indigo-300">Well-Known News Sources</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <img alt="CNN logo" class="mx-auto" height="50" src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png" width="100"/>
+                </div>
+                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <img alt="Fox News logo" class="mx-auto" height="50" src="https://storage.googleapis.com/a1aa/image/6ym6ct_-Qo_Gwobm20lUyckKoy-0JuFBJLnNqFio90w.jpg" width="100"/>
+                </div>
+                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <img alt="BBC logo" class="mx-auto" height="50" src="https://media.licdn.com/dms/image/v2/D4E0BAQFu9NxhT2QFfQ/company-logo_200_200/company-logo_200_200/0/1666097311593/bbc_logo?e=2147483647&v=beta&t=gRA9Oa_ny56fBgL4XcQY3RYqLwOuWzxuBE8GBSR19YM" width="100"/>
+                </div>
+                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <img alt="CBS logo" class="mx-auto" height="50" src="https://s3-media0.fl.yelpcdn.com/bphoto/lzO_-Fi0c_R31TRGe8m72g/l.jpg" width="100"/>
+                </div>
+                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <img alt="New York Times logo" class="mx-auto" height="50" src="https://www.shareicon.net/data/512x512/2016/06/23/614156_new_512x512.png" width="100"/>
+                </div>
+                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <img alt="Washington Post logo" class="mx-auto" height="50" src="https://storage.googleapis.com/a1aa/image/H1x5tCZJmblDA-bMy1Koa83HiYrGx7u8h0CHMpYYGs4.jpg" width="100"/>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        document.getElementById('analyze-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const url = document.getElementById('url').value;
+            document.getElementById('bias-result').innerHTML = '<span class="animate-pulse-slow text-yellow-400">Analyzing...</span>';
+            setTimeout(() => {
+                document.getElementById('bias-result').textContent = "This article has a moderate bias.";
+                document.getElementById('result').classList.remove('hidden');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
