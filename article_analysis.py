@@ -20,7 +20,7 @@ For each score, include 2-3 direct quotes (each one being 3 sentences long) from
 - Moderate Left: NPR, Washington Post
 - Far Left: Jacobin, The Intercept
 
-All of your outputs will be in the following format, your response to the chat should not have any extraneous words outside of this format: “
+All of your outputs will be in the following format, your response to the chat should not have any extraneous words outside of this format ENSURE That every rational includes quotes from the article that are MULTIPLE SENTENCES long. Find the article links using deep research, do not put fake/dummy links: “
 Political Bias Score: [Score]
 Rationale: [Rationale WITH quotes]
 Factual Correctness Score: [Score]
