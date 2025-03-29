@@ -27,12 +27,11 @@ def scrape_article(url):
         article.download(input_html=response.text)
         article.parse()
         
-        return {
-            'authors': article.authors,
-            'publisher': extract_publisher(url, response.text),
-            'text': article.text,
-            'bypass_method': 'Direct access'
-        }
+        return format_output(
+            authors=article.authors,
+            title=article.title,
+            text=article.text
+        )
         
     except Exception as e:
         return {'error': str(e)}
@@ -46,23 +45,21 @@ def handle_paywall(url):
             
             if response.status_code == 200:
                 soup = BeautifulSoup(response.content, 'html.parser')
-                return {
-                    'authors': extract_authors(soup),
-                    'publisher': extract_publisher(url, response.text),
-                    'text': extract_text(soup),
-                    'bypass_method': f'Archive: {archive}'
-                }
+                return format_output(
+                    authors=extract_authors(soup),
+                    title=extract_title(soup),
+                    text=extract_text(soup)
+                )
                 
         # Fallback to raw HTML parsing
         response = requests.get(url, headers={'User-Agent': random.choice(USER_AGENTS)})
         soup = BeautifulSoup(response.content, 'html.parser')
         
-        return {
-            'authors': extract_authors(soup),
-            'publisher': extract_publisher(url, response.text),
-            'text': extract_text(soup),
-            'bypass_method': 'HTML parsing fallback'
-        }
+        return format_output(
+            authors=extract_authors(soup),
+            title=extract_title(soup),
+            text=extract_text(soup)
+        )
         
     except Exception as e:
         return {'error': str(e)}
@@ -80,11 +77,14 @@ def extract_authors(soup):
             return [a.get_text(strip=True) for a in authors]
     return []
 
-def extract_publisher(url, html):
-    # Get from Open Graph or domain name
-    soup = BeautifulSoup(html, 'html.parser')
-    og_publisher = soup.find('meta', property='og:site_name')
-    return og_publisher['content'] if og_publisher else url.split('//')[-1].split('/')[0]
+def extract_title(soup):
+    # Extract title from <title> tag or Open Graph metadata
+    og_title = soup.find('meta', property='og:title')
+    if og_title and og_title['content']:
+        return og_title['content']
+    
+    title_tag = soup.find('title')
+    return title_tag.get_text(strip=True) if title_tag else "Unknown Title"
 
 def extract_text(soup):
     # Common content containers
@@ -99,5 +99,16 @@ def extract_text(soup):
             return content.get_text(strip=True)
     return soup.get_text()
 
-result = scrape_article('https://www.foxnews.com/us/feds-alert-tesla-global-day-action-after-nationwide-violence-leads-arrests')
+def format_output(authors, title, text):
+    # Format the output as requested
+    formatted_output = f"""
+Authors: {authors}
+Title: {title}
+Text: {text}
+"""
+    return formatted_output
+
+# Example Usage
+url = "https://www.foxnews.com/us/feds-alert-tesla-global-day-action-after-nationwide-violence-leads-arrests"
+result = scrape_article(url)
 print(result)
