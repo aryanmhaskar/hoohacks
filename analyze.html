@@ -124,7 +124,7 @@
 
             // Populate the analysis details in the page
             const articleText = data.aiResponse.article;
-            document.getElementById('articleContent').innerHTML = highlightRandomSentences(articleText);
+            document.getElementById('articleContent').innerHTML = sentimentAnalysis(articleText);
             document.getElementById('scoreIndicator').style = `left: ${((parseInt(data.aiResponse.politicalBiasScore) + 42)/84)*100}%;`
 
 
@@ -154,7 +154,7 @@
       }
     };
 
-    function highlightRandomSentences(text) {
+    function sentimentAnalysis(text) {
     const sentences = text.match(/[^.!?]+[.!?]/g) || [text]; // Split text into sentences
     const numToHighlight = Math.min(4, Math.max(3, Math.floor(sentences.length * 0.5))); // Pick 2-3 sentences
     const selectedIndexes = new Set();
