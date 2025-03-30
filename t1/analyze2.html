@@ -6,6 +6,18 @@
   <title>Analysis Results | Political Bias Compass</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Ensure loading spinner and content are styled properly */
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50px; /* Adjust based on box size */
+    }
+    .content {
+      display: none; /* Hidden initially */
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white min-h-screen">
   <!-- Header -->
@@ -23,15 +35,24 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Left: Article Content -->
       <div class="lg:col-span-2 bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-2xl font-semibold mb-4 text-white">Article</h2>
+        <div id="articleHeadingLoading" class="loading-spinner">
+          <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+        </div>
+        <h2 id="articleHeading" class="text-2xl font-semibold mb-4 text-white content">Faye Hall, American detained by Taliban, has been released</h2>
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-white">Author</h3>
-          <p id="articleAuthor" class="text-gray-300">Michael Dorgan</p>
+          <div id="authorLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <p id="articleAuthor" class="text-gray-300 content">Michael Dorgan</p>
         </div>
         <div>
           <h3 class="text-lg font-semibold mb-2 text-white">Full Article Text</h3>
           <div id="articleText" class="max-h-[600px] overflow-y-auto p-4 bg-gray-700 rounded-lg whitespace-pre-line text-gray-200 leading-relaxed">
-            <div id="articleContent">
+            <div id="textLoading" class="loading-spinner">
+              <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+            </div>
+            <div id="articleContent" class="content">
               An American woman who had been detained by the Taliban since February has been freed, a source with knowledge of the release told Fox News on Saturday.
 
               American citizen Faye Hall was released on Thursday and received at the Qatari embassy in Kabul. She has been confirmed to be in good health after undergoing a series of medical checks, the source said. Arrangements are currently underway for her return to the U.S.
@@ -72,39 +93,57 @@
         </div>
       </div>
 
-      <!-- Right: Bias Info -->
+      <!-- Right: Bias Info with Loading -->
       <div class="space-y-6">
         <div class="bg-gray-800 rounded-lg shadow-md p-6">
           <h3 class="text-lg font-semibold mb-2 text-white">Political Bias</h3>
-          <div class="flex items-center">
-            <span class="font-bold text-blue-500 mr-2">10L</span>
-            <div class="flex-1 h-4 bg-gradient-to-r from-blue-500 via-gray-500 to-red-500 rounded-full relative">
-              <div id="scoreIndicator" class="h-4 w-2 bg-white rounded-full absolute" style="left: 60%;"></div>
-            </div>
-            <span class="font-bold text-red-500 ml-2">10R</span>
+          <div id="biasLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
           </div>
-          <p id="scoreText" class="mt-2 text-center font-medium text-gray-300">2R</p>
+          <div id="biasContent" class="content">
+            <div class="flex items-center">
+              <span class="font-bold text-blue-500 mr-2">10L</span>
+              <div class="flex-1 h-4 bg-gradient-to-r from-blue-500 via-gray-500 to-red-500 rounded-full relative">
+                <div id="scoreIndicator" class="h-4 w-2 bg-white rounded-full absolute" style="left: 60%;"></div>
+              </div>
+              <span class="font-bold text-red-500 ml-2">10R</span>
+            </div>
+            <p id="scoreText" class="mt-2 text-center font-medium text-gray-300">2R</p>
+          </div>
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow-md p-6">
           <h3 class="text-lg font-semibold mb-2 text-white">Factual Correctness</h3>
-          <p class="text-sm text-gray-400">
+          <div id="factualLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <p id="factualContent" class="text-sm text-gray-400 content">
             Mostly accurate. Hall’s release, Qatar’s role, and Trump’s bounty removal are reported by credible sources. The Taliban’s restrictions on women are documented. However, the agreement’s details are unconfirmed by Fox News, adding uncertainty.
           </p>
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2 text-white">Author Political Bias</h3>
-          <p id="authorBias" class="text-gray-300">
-            3R. Michael Dorgan, a Fox News reporter, often aligns with its conservative stance. This article’s focus on Trump’s success and contrast with Biden’s deal reflects a slight right-leaning perspective.
-          </p>
+          <div id="authorBiasLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <div id="authorBiasContent" class="content">
+            <h3 class="text-lg font-semibold mb-2 text-white">Author Political Bias: 3R</h3>
+            <p class="text-gray-300">
+              Michael Dorgan, a Fox News reporter, often aligns with its conservative stance. This article’s focus on Trump’s success and contrast with Biden’s deal reflects a slight right-leaning perspective.
+            </p>
+          </div>
         </div>
 
         <div class="bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2 text-white">Publishing Bias</h3>
-          <p id="publishingBias" class="text-gray-300">
-            Fox News: 5R. Fox News leans right, often highlighting conservative successes. This article’s emphasis on Trump’s role and subtle critique of Biden’s deal aligns with its editorial stance.
-          </p>
+          <div id="publishingBiasLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <div id="publishingBiasContent" class="content">
+            <h3 class="text-lg font-semibold mb-2 text-white">Publishing Bias: 5R</h3>
+            <p class="text-gray-300">
+              Fox News leans right, often highlighting conservative successes. This article’s emphasis on Trump’s role and subtle critique of Biden’s deal aligns with its editorial stance.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -118,5 +157,27 @@
       </a>
     </div>
   </footer>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92841a6c8f9d4564',t:'MTc0MzMwMDk2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+  <!-- JavaScript to handle loading animation -->
+  <script>
+    window.onload = function() {
+      const sections = [
+        { loading: 'articleHeadingLoading', content: 'articleHeading' },
+        { loading: 'authorLoading', content: 'articleAuthor' },
+        { loading: 'textLoading', content: 'articleContent' },
+        { loading: 'biasLoading', content: 'biasContent' },
+        { loading: 'factualLoading', content: 'factualContent' },
+        { loading: 'authorBiasLoading', content: 'authorBiasContent' },
+        { loading: 'publishingBiasLoading', content: 'publishingBiasContent' }
+      ];
+
+      sections.forEach(section => {
+        setTimeout(() => {
+          document.getElementById(section.loading).style.display = 'none';
+          document.getElementById(section.content).style.display = 'block';
+        }, 3000); // 3 seconds
+      });
+    };
+  </script>
+</body>
 </html>

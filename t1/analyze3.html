@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analysis Results | Political Bias Compass</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Ensure loading spinner and content are styled properly */
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50px; /* Adjust based on box size */
+    }
+    .content {
+      display: none; /* Hidden initially */
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-gray-800 shadow py-6">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-indigo-400">
+        <i class="fas fa-compass mr-2 text-indigo-400"></i>
+        Political Bias Analysis
+      </h1>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left: Article Content -->
+      <div class="lg:col-span-2 bg-gray-800 rounded-lg shadow-md p-6">
+        <div id="articleHeadingLoading" class="loading-spinner">
+          <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+        </div>
+        <h2 id="articleHeading" class="text-2xl font-semibold mb-4 text-white content">Trump says he ‘couldn’t care less’ if auto prices rise because of tariffs</h2>
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold text-white">Author</h3>
+          <div id="authorLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <p id="articleAuthor" class="text-gray-300 content">David Goldman</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-white">Full Article Text</h3>
+          <div id="articleText" class="max-h-[600px] overflow-y-auto p-4 bg-gray-700 rounded-lg whitespace-pre-line text-gray-200 leading-relaxed">
+            <div id="textLoading" class="loading-spinner">
+              <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+            </div>
+            <div id="articleContent" class="content">
+              President Donald Trump said Saturday he doesn’t care if automakers hike prices because of his tariffs. In fact, he encouraged them to.
+
+              Asked by NBC News’ Kristen Welker in a phone interview about whether he pressured automakers to avoid raising prices after his 25% tariffs on imported cars and parts go into effect, Trump denied that he told CEOs to control costs.
+
+              “No, I never said that,” Trump told Welker. “I couldn’t care less if they raise prices, because people are going to start buying American cars.”
+
+              The Wall Street Journal reported Thursday that Trump held a call this month with auto CEOs and threatened them with even heftier tariffs if they raise prices because of the import taxes. But Trump on Saturday said he hopes his tariffs lead to higher prices, because it will encourage automakers to build their cars and parts in the United States and persuade customers to buy American.
+
+              “I couldn’t care less,” Trump said. “I hope they raise their prices, because if they do, people are gonna buy American-made cars. We have plenty.”
+
+              After the interview, an aide to the president followed up with NBC News to say that Trump was referring specifically to foreign car prices.
+
+              Trump said the message he delivered to the CEOs was to shift production back to the United States. Foreign and domestic automakers assemble many of their cars and parts in the United States, but they also make vehicles and parts in Mexico and Canada. For decades, a free trade zone in North America has effectively treated the US, Canada and Mexico as one big country.
+
+              <span style="color: orange;">“The message is: ‘Congratulations, if you make your car in the United States, you’re going to make a lot of money. If you don’t, you’re going to have to probably come to the United States, because if you make your car in the United States, there is no tariff,’” Trump told Welker.</span>
+
+              Automakers have hesitated to shift production to the US because of the large expense and amount of time required to construct new factories, hire workers and adjust supply chains. And Trump’s on-again, off-again tariffs give auto CEOs little confidence that he’ll stick to his plans for the long term.
+
+              To that point, Trump said Saturday that his upcoming massive reciprocal tariffs that match foreign countries’ import taxes dollar-for-dollar on a variety of products will be permanent — but that he is also open to negotiations.
+
+              “Absolutely, they’re permanent, sure,” he said of the levies, set to go into effect Wednesday. “The world has been ripping off the United States for the last 40 years and more.”
+
+              But Trump later said he would negotiate the tariffs down “only if people are willing to give us something of great value. Because countries have things of great value. Otherwise, there’s no room for negotiation.”
+
+              <span style="color: orange;">Auto industry experts have said Trump’s tariffs on vehicles and parts, which are set to go into effect Thursday, will raise the cost of producing all cars sold in the United States — both imports and those built in American factories — by thousands of dollars. Whether or not automakers raise prices themselves, vehicle prices will almost certainly rise in the United States because of a supply-and-demand imbalance. Automakers will likely cut back production of cars as they wait to see whether tariffs prove to be short-lived.</span>
+
+              Canadian Prime Minister Mark Carney told Trump on Friday that his nation will retaliate against the United States with tariffs of its own if Trump presses forward with his promised levies — potentially escalating what is already developing into an ugly and damaging trade war. Trump on Saturday said he wouldn’t delay the tariffs, but he may be open to a deal — after they go into effect.
+
+              Peter Navarro, White House senior counselor for trade and manufacturing, on Sunday dismissed concerns about rising prices for consumers, telling consumers who may be concerned to “trust in Trump.”
+
+              “Tariffs are tax cuts, tariffs are jobs, tariffs are national security, tariffs are great for Americans. Tariffs will make America great again,” Navarro said during an appearance on “Fox News Sunday” with Shannon Bream.
+
+              <span style="color: orange;">Although Americans won’t necessarily feel the full effects of tariffs immediately, the import taxes could raise prices of just about everything, economists largely agree — especially given that over 40% of the goods America imported last year came from the nations Trump could target with his reciprocal tariffs.</span>
+
+              Bream pressed Navarro on concerns that the tariffs will show up in everyday costs. He pointed to money raised from auto tariffs that will support tax cuts, promising “the biggest tax cut in American history for the middle class.”
+
+              “Holistically, as they say, consumers and Americans are going to be better off, including all the jobs they get,” he said.
+
+              Pressed once more about polling that reflects the overall belief that tariffs will make products more expensive and Trump’s own assertion that tariffs could lead to “some disruption,” Navarro said, “Trust in Trump.”
+
+              He continued, “We have the example from the first term. We know that we imposed historically high tariffs on China. We imposed aluminum and steel tariffs. We imposed on washing machines, on solar. … All we got out of that was prosperity and price stability. And the reason why we’re not going to see inflation is because foreigners are going to eat most of it. They have to.”
+
+              Navarro is correct that Trump’s tariffs from his first term did not raise inflation. But Trump’s tariffs in his entire first term were on foreign goods totaling $380 billion worth of foreign goods. Trump has already imposed tariffs on $1.4 trillion of goods in his second term and is threatening even more with his reciprocal tariffs, auto tariffs and other import taxes on lumber, pharmaceuticals, copper and many other items.
+
+              CNN’s Chris Isidore contributed to this report.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Bias Info with Loading -->
+      <div class="space-y-6">
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold mb-2 text-white">Political Bias</h3>
+          <div id="biasLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <div id="biasContent" class="content">
+            <div class="flex items-center">
+              <span class="font-bold text-blue-500 mr-2">10L</span>
+              <div class="flex-1 h-4 bg-gradient-to-r from-blue-500 via-gray-500 to-red-500 rounded-full relative">
+                <div id="scoreIndicator" class="h-4 w-2 bg-white rounded-full absolute" style="left: 40%;"></div>
+              </div>
+              <span class="font-bold text-red-500 ml-2">10R</span>
+            </div>
+            <p id="scoreText" class="mt-2 text-center font-medium text-gray-300">2L</p>
+          </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold mb-2 text-white">Factual Correctness</h3>
+          <div id="factualLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <p id="factualContent" class="text-sm text-gray-400 content">
+            Mostly accurate. Trump’s quotes are directly sourced from the NBC interview, and Navarro’s statements align with his Fox News appearance. Economic impacts are supported by expert consensus, though speculative: "Auto industry experts have said Trump’s tariffs on vehicles and parts... will raise the cost of producing all cars sold in the United States." The Wall Street Journal’s report is cited but unconfirmed by CNN.
+          </p>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <div id="authorBiasLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <div id="authorBiasContent" class="content">
+            <h3 class="text-lg font-semibold mb-2 text-white">Author Political Bias: 3L</h3>
+            <p class="text-gray-300">
+              David Goldman, writing for CNN, shows a slight left-leaning bias. The article emphasizes potential economic downsides, e.g., "Although Americans won’t necessarily feel the full effects of tariffs immediately, the import taxes could raise prices of just about everything," while subtly questioning Navarro’s optimism with expert counterpoints.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <div id="publishingBiasLoading" class="loading-spinner">
+            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
+          </div>
+          <div id="publishingBiasContent" class="content">
+            <h3 class="text-lg font-semibold mb-2 text-white">Publishing Bias: 4L</h3>
+            <p class="text-gray-300">
+              CNN leans left, often critiquing conservative economic policies. This piece highlights tariff costs, stating, "Auto industry experts have said Trump’s tariffs... will raise the cost of producing all cars sold in the United States," and contrasts Navarro’s claims with broader economic consensus, reflecting a liberal skepticism.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 py-4 border-t border-gray-700">
+    <div class="container mx-auto px-4 text-center">
+      <a href="index.html" class="text-indigo-400 hover:text-indigo-300 font-medium">
+        <i class="fas fa-arrow-left mr-2"></i> Analyze Another Article
+      </a>
+    </div>
+  </footer>
+
+  <!-- JavaScript to handle loading animation -->
+  <script>
+    window.onload = function() {
+      const sections = [
+        { loading: 'articleHeadingLoading', content: 'articleHeading' },
+        { loading: 'authorLoading', content: 'articleAuthor' },
+        { loading: 'textLoading', content: 'articleContent' },
+        { loading: 'biasLoading', content: 'biasContent' },
+        { loading: 'factualLoading', content: 'factualContent' },
+        { loading: 'authorBiasLoading', content: 'authorBiasContent' },
+        { loading: 'publishingBiasLoading', content: 'publishingBiasContent' }
+      ];
+
+      sections.forEach(section => {
+        setTimeout(() => {
+          document.getElementById(section.loading).style.display = 'none';
+          document.getElementById(section.content).style.display = 'block';
+        }, 3000); // 3 seconds
+      });
+    };
+  </script>
+</body>
+</html>
