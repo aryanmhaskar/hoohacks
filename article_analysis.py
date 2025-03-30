@@ -1,7 +1,7 @@
-from secret import API_KEY
 from openai import OpenAI
 from scraper import scrape_article
 
+API_KEY = "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"
 YOUR_API_KEY = API_KEY
 
 def format_bias_analysis(article_data):

@@ -6,6 +6,13 @@
   <title>Analysis Results | Political Bias Compass</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
   <!-- Header -->
@@ -82,5 +89,69 @@
       </a>
     </div>
   </footer>
+
+  <!-- Script for handling the dynamic content -->
+  <script>
+    window.onload = async function() {
+      const url = localStorage.getItem('articleUrl');  // Retrieve the URL from localStorage
+
+      if (url) {
+        // Display the URL on the page
+        document.getElementById('articleAuthor').innerText = "Author: " + url;
+
+        // Show loading indicator while fetching the results
+        document.getElementById('loadingIndicator').style.display = 'block';
+        document.getElementById('articleText').style.display = 'none';
+
+        try {
+          // Send the URL to your backend to get the analysis results
+          const response = await fetch("http://127.0.0.1:5000/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ url })
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+
+            console.log(data.aiResponse.articleText)
+            console.log("------------------------------")
+            console.log(data.aiResponse.authorBiasRationale)
+            console.log("------------------------------")
+            console.log(data.aiResponse.publishingBiasRationale)
+            console.log("------------------------------")
+
+            // Hide loading indicator and display the results
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('articleText').style.display = 'block';
+
+            // Populate the analysis details in the page
+            document.getElementById('articleContent').innerText = data.aiResponse.articleText;
+            document.getElementById('authorBias').innerText = data.aiResponse.authorBiasRationale;
+            document.getElementById('publishingBias').innerText = data.aiResponse.publishingBiasRationale;
+
+            // Set political bias score and rationale
+            const score = data.aiResponse.politicalBiasScore;
+            const scoreText = `${score >= 0 ? 'Neutral' : 'Left'} ${score}`;
+            document.getElementById('scoreText').innerText = scoreText;
+
+            // Adjust score position on the scale
+            const scorePercentage = (score + 10) * 5;
+            document.getElementById('scoreIndicator').style.left = `${scorePercentage}%`;
+
+          } else {
+            alert("Error: " + data.error);
+          }
+        } catch (error) {
+          alert("An unexpected error occurred: " + error.message);
+        }
+      } else {
+        alert("No URL found in localStorage. Please go back and submit the URL again.");
+      }
+    };
+  </script>
 </body>
 </html>
