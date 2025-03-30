@@ -6,6 +6,13 @@
   <title>Analysis Results | Political Bias Compass</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
   <!-- Header -->
@@ -31,9 +38,7 @@
         <div>
           <h3 class="text-lg font-semibold mb-2">Full Article Text</h3>
           <div id="articleText" class="max-h-[600px] overflow-y-auto p-4 bg-gray-50 dark:bg-gray-700 rounded-lg whitespace-pre-line text-gray-800 dark:text-gray-200 leading-relaxed">
-            <div id="articleContent">
-              <!-- Scraper output goes here -->
-            </div>
+            <p id="articleContent" class="text-gray-700 dark:text-gray-300">Loading...</p>
           </div>
           <div id="loadingIndicator" class="text-center py-4">
             <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
@@ -47,28 +52,28 @@
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 class="text-lg font-semibold mb-2">Political Bias</h3>
           <div class="flex items-center">
-            <span class="font-bold text-blue-600 mr-2">10L</span>
+            <span class="font-bold text-blue-600 mr-2">42L</span>
             <div class="flex-1 h-4 bg-gradient-to-r from-blue-600 via-gray-300 dark:via-gray-600 to-red-600 rounded-full relative">
               <div id="scoreIndicator" class="h-4 w-2 bg-black dark:bg-white rounded-full absolute" style="left: 50%;"></div>
             </div>
-            <span class="font-bold text-red-600 ml-2">10R</span>
+            <span class="font-bold text-red-600 ml-2">42R</span>
           </div>
           <p id="scoreText" class="mt-2 text-center font-medium">Neutral (0)</p>
         </div>
 
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2">Factual Correctness</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400">Accuracy dial here (e.g. green/red meter)</p>
+          <h3 id="factualCorrectnessScore" class="text-lg font-semibold mb-2">Factual Correctness</h3>
+          <p id="factualCorrectnessRationale" class="text-sm text-gray-600 dark:text-gray-400">Accuracy dial here (e.g. green/red meter)</p>
         </div>
 
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2">Author Political Bias</h3>
-          <p id="authorBias" class="text-gray-700 dark:text-gray-300">Loading...</p>
+          <h3 id="authorBiasScore" class="text-lg font-semibold mb-2">Author Political Bias</h3>
+          <p id="authorBiasRationale" class="text-gray-700 dark:text-gray-300">Loading...</p>
         </div>
 
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2">Publishing Bias</h3>
-          <p id="publishingBias" class="text-gray-700 dark:text-gray-300">Loading...</p>
+          <h3 id="publishingBiasScore" class="text-lg font-semibold mb-2">Publishing Bias</h3>
+          <p id="publishingBiasRationale" class="text-gray-700 dark:text-gray-300">Loading...</p>
         </div>
       </div>
     </div>
@@ -82,5 +87,71 @@
       </a>
     </div>
   </footer>
+
+  <!-- Script for handling the dynamic content -->
+  <script>
+    window.onload = async function() {
+      const url = localStorage.getItem('articleUrl');  // Retrieve the URL from localStorage
+
+      if (url) {
+        // Display the URL on the page
+
+        // Show loading indicator while fetching the results
+        document.getElementById('loadingIndicator').style.display = 'block';
+        document.getElementById('articleText').style.display = 'none';
+
+        try {
+          // Send the URL to your backend to get the analysis results
+          const response = await fetch("http://127.0.0.1:5000/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ url })
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+          
+
+            console.log(data.aiResponse);
+            document.getElementById('articleAuthor').innerText = data.aiResponse.author;
+
+            // Hide loading indicator and display the results
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('articleText').style.display = 'block';
+
+            // Populate the analysis details in the page
+            document.getElementById('articleContent').innerText = data.aiResponse.article;
+            document.getElementById('scoreIndicator').style = `left: ${((parseInt(data.aiResponse.politicalBiasScore) + 42)/84)*100}%;`
+
+
+            document.getElementById('factualCorrectnessScore').innerText = data.aiResponse.factualCorrectnessScore;
+            document.getElementById('factualCorrectnessRationale').innerText = data.aiResponse.factualCorrectnessRationale;
+
+
+            document.getElementById('authorBiasScore').innerText = data.aiResponse.authorBiasScore;
+            document.getElementById('authorBiasRationale').innerText = data.aiResponse.authorBiasRationale;
+
+            document.getElementById('publishingBiasScore').innerText = data.aiResponse.publishingBiasScore;
+            document.getElementById('publishingBiasRationale').innerText = data.aiResponse.publishingBiasRationale;
+
+            // Set political bias score and rationale
+            const score = data.aiResponse.politicalBiasScore;
+            const scoreText = `${score >= 0 ? 'Neutral' : 'Left'} ${score}`;
+            document.getElementById('scoreText').innerText = scoreText;
+
+          } else {
+            alert("Error: " + data.error);
+          }
+        } catch (error) {
+          alert("An unexpected error occurred: " + error.message);
+        }
+      } else {
+        alert("No URL found in localStorage. Please go back and submit the URL again.");
+      }
+    };
+  </script>
 </body>
 </html>

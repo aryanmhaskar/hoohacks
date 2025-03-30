@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Political Bias Compass</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
@@ -10,9 +12,6 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .animate-pulse-slow {
-            animation: pulse 2s infinite;
         }
     </style>
 </head>
@@ -34,41 +33,20 @@
                     </button>
                 </div>
             </form>
-            <div class="mt-6 hidden text-center" id="result">
-                <h2 class="text-xl font-bold">Analysis Result</h2>
-                <p class="mt-2 text-lg" id="bias-result"></p>
-            </div>
         </main>
-        <section class="mt-12">
-            <h2 class="text-2xl font-bold text-center mb-4 text-indigo-300">Well-Known News Sources</h2>
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <img alt="CNN logo" class="mx-auto" height="50" src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png" width="100"/>
-                </div>
-                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <img alt="Fox News logo" class="mx-auto" height="50" src="https://storage.googleapis.com/a1aa/image/6ym6ct_-Qo_Gwobm20lUyckKoy-0JuFBJLnNqFio90w.jpg" width="100"/>
-                </div>
-                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <img alt="BBC logo" class="mx-auto" height="50" src="https://media.licdn.com/dms/image/v2/D4E0BAQFu9NxhT2QFfQ/company-logo_200_200/company-logo_200_200/0/1666097311593/bbc_logo?e=2147483647&v=beta&t=gRA9Oa_ny56fBgL4XcQY3RYqLwOuWzxuBE8GBSR19YM" width="100"/>
-                </div>
-                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <img alt="CBS logo" class="mx-auto" height="50" src="https://s3-media0.fl.yelpcdn.com/bphoto/lzO_-Fi0c_R31TRGe8m72g/l.jpg" width="100"/>
-                </div>
-                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <img alt="New York Times logo" class="mx-auto" height="50" src="https://www.shareicon.net/data/512x512/2016/06/23/614156_new_512x512.png" width="100"/>
-                </div>
-                <div class="glass p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <img alt="Washington Post logo" class="mx-auto" height="50" src="https://storage.googleapis.com/a1aa/image/H1x5tCZJmblDA-bMy1Koa83HiYrGx7u8h0CHMpYYGs4.jpg" width="100"/>
-                </div>
-            </div>
-        </section>
     </div>
+
     <script>
         document.getElementById('analyze-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const url = document.getElementById('url').value;
-            localStorage.setItem('articleUrl', url);
-            window.location.href = 'analyze.html';
+            event.preventDefault();  // Prevent default form submission
+            const url = document.getElementById('url').value;  // Get URL value from input field
+
+            if (url) {
+                localStorage.setItem('articleUrl', url);  // Store the URL in localStorage
+                window.location.href = 'analyze.html';  // Redirect to analyze.html
+            } else {
+                alert("Please enter a valid URL");  // Show an alert if the URL is empty
+            }
         });
     </script>
 </body>
