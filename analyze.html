@@ -38,9 +38,7 @@
         <div>
           <h3 class="text-lg font-semibold mb-2">Full Article Text</h3>
           <div id="articleText" class="max-h-[600px] overflow-y-auto p-4 bg-gray-50 dark:bg-gray-700 rounded-lg whitespace-pre-line text-gray-800 dark:text-gray-200 leading-relaxed">
-            <div id="articleContent">
-              <!-- Scraper output goes here -->
-            </div>
+            <p id="articleContent" class="text-gray-700 dark:text-gray-300">Loading...</p>
           </div>
           <div id="loadingIndicator" class="text-center py-4">
             <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
@@ -97,7 +95,6 @@
 
       if (url) {
         // Display the URL on the page
-        document.getElementById('articleAuthor').innerText = "Author: " + url;
 
         // Show loading indicator while fetching the results
         document.getElementById('loadingIndicator').style.display = 'block';
@@ -119,15 +116,15 @@
           
 
             console.log(data.aiResponse);
+            document.getElementById('articleAuthor').innerText = data.aiResponse.author;
 
             // Hide loading indicator and display the results
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('articleText').style.display = 'block';
 
             // Populate the analysis details in the page
-            document.getElementById('articleContent').innerText = data.aiResponse.articleText;
-            console.log(data.aiResponse.score);
-            document.getElementById('scoreIndicator').style = `left: ${((parseInt(data.aiResponse.score) + 42)/84)*100}%;`
+            document.getElementById('articleContent').innerText = data.aiResponse.article;
+            document.getElementById('scoreIndicator').style = `left: ${((parseInt(data.aiResponse.politicalBiasScore) + 42)/84)*100}%;`
 
 
             document.getElementById('factualCorrectnessScore').innerText = data.aiResponse.factualCorrectnessScore;
@@ -144,10 +141,6 @@
             const score = data.aiResponse.politicalBiasScore;
             const scoreText = `${score >= 0 ? 'Neutral' : 'Left'} ${score}`;
             document.getElementById('scoreText').innerText = scoreText;
-
-            // Adjust score position on the scale
-            const scorePercentage = (score + 10) * 5;
-            document.getElementById('scoreIndicator').style.left = `${scorePercentage}%`;
 
           } else {
             alert("Error: " + data.error);

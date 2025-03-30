@@ -143,10 +143,8 @@ def format_bias_analysis():
         if publishing_bias_rationale:
             analysis_data["publishingBiasRationale"] = publishing_bias_rationale
 
-
-        author = split_response[13]
         if publishing_bias_rationale:
-            analysis_data["author"] = author
+            analysis_data["author"] = article_content['authors']
 
         article = split_response[14]
         if publishing_bias_rationale:
