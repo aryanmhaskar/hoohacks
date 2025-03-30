@@ -1,5 +1,3 @@
-
-
 import re
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -32,7 +30,7 @@ def format_bias_analysis():
 
     # Prepare the system prompt for AI analysis
     system_prompt = """Analyze news articles using these methodologies:
-    1. Bias Scoring (-42 to +42 scale from Ad Fontes Media)
+    1. Bias Scoring (-42 to +42 scale from Ad Fontes Media, ensure the sign is used and left is in the negative range)
     2. Factual Reliability (0-64 scale from Media Bias Chart)
     3. Author Bias History (AllSides Media methodology)
     4. Publisher Bias Rating (Ground News aggregation)
@@ -59,7 +57,11 @@ def format_bias_analysis():
     Neutral Article Recommendation: [article link]
     Moderate Left Article Recommendation: [article link]
     Far Left Article Recommendation: [article link]
+    Author: [Rationale]
+    Article: [Article Text]
     “
+
+    Split responses with "--SPLIT--", for example: Political Bias Score: -10--SPLIT--Rationale: The article presents a relatively balanced view of the issue, but leans slightly left in its framing. For example, it states "School used to be lauded as the best days of our lives — but those in Year 12 feel more like they're in a relentless competition that only the strongest can survive." This framing suggests criticism of the current educational system and competition, which aligns more with left-leaning perspectives. The author also expresses concern about the pressure on students, stating "When I talk to teens about how they feel about their final years of schooling, I can't help but think something, somewhere, has gone terribly wrong."--SPLIT--Factual Correctness Score: 50--SPLIT--...etc
     """
 
     # Call the OpenAI API to analyze the scraped article
@@ -99,62 +101,77 @@ def format_bias_analysis():
             "moderateRightArticle": None,
             "neutralArticle": None,
             "moderateLeftArticle": None,
-            "farLeftArticle": None
+            "farLeftArticle": None,
+            "author": None,
+            "article": None
         }
 
-        # Regular expressions to extract each score and rationale
-        political_bias_score = re.search(r"Political Bias Score: ([-+]?\d+)", raw_response)
+        print(raw_response)
+        split_response = raw_response.split("--SPLIT--")
+        print(split_response)
+
+        # Adjusted regex to properly separate the sections and capture each section without overlapping
+        political_bias_score = split_response[0]
         if political_bias_score:
-            analysis_data["politicalBiasScore"] = political_bias_score.group(1)
+            analysis_data["politicalBiasScore"] = political_bias_score
         
-        political_bias_rationale = re.search(r"Rationale: (.*?)Factual Correctness Score:", raw_response, re.DOTALL)
+        political_bias_rationale = split_response[1]
         if political_bias_rationale:
-            analysis_data["politicalBiasRationale"] = political_bias_rationale.group(1).strip()
+            analysis_data["politicalBiasRationale"] = political_bias_rationale
 
-        factual_correctness_score = re.search(r"Factual Correctness Score: ([-+]?\d+)", raw_response)
+        factual_correctness_score = split_response[2]
         if factual_correctness_score:
-            analysis_data["factualCorrectnessScore"] = factual_correctness_score.group(1)
+            analysis_data["factualCorrectnessScore"] = factual_correctness_score
         
-        factual_correctness_rationale = re.search(r"Rationale: (.*?)Author Political Bias Score:", raw_response, re.DOTALL)
+        factual_correctness_rationale = split_response[3]
         if factual_correctness_rationale:
-            analysis_data["factualCorrectnessRationale"] = factual_correctness_rationale.group(1).strip()
+            analysis_data["factualCorrectnessRationale"] = factual_correctness_rationale
 
-        author_bias_score = re.search(r"Author Political Bias Score: ([-+]?\d+)", raw_response)
+        author_bias_score = split_response[4]
         if author_bias_score:
-            analysis_data["authorBiasScore"] = author_bias_score.group(1)
+            analysis_data["authorBiasScore"] = author_bias_score
         
-        author_bias_rationale = re.search(r"Rationale: (.*?)Publishing Site Bias Score:", raw_response, re.DOTALL)
+        author_bias_rationale = split_response[5]
         if author_bias_rationale:
-            analysis_data["authorBiasRationale"] = author_bias_rationale.group(1).strip()
+            analysis_data["authorBiasRationale"] = author_bias_rationale
 
-        publishing_bias_score = re.search(r"Publishing Site Bias Score: ([-+]?\d+)", raw_response)
+        publishing_bias_score = split_response[6]
         if publishing_bias_score:
-            analysis_data["publishingBiasScore"] = publishing_bias_score.group(1)
+            analysis_data["publishingBiasScore"] = publishing_bias_score
         
-        publishing_bias_rationale = re.search(r"Rationale: (.*?)Far Right Article Recommendation:", raw_response, re.DOTALL)
+        publishing_bias_rationale = split_response[7]
         if publishing_bias_rationale:
-            analysis_data["publishingBiasRationale"] = publishing_bias_rationale.group(1).strip()
+            analysis_data["publishingBiasRationale"] = publishing_bias_rationale
 
-        # Extract article recommendations
-        far_right_article = re.search(r"Far Right Article Recommendation: (https?://[^\s]+)", raw_response)
-        if far_right_article:
-            analysis_data["farRightArticle"] = far_right_article.group(1)
 
-        moderate_right_article = re.search(r"Moderate Right Article Recommendation: (https?://[^\s]+)", raw_response)
-        if moderate_right_article:
-            analysis_data["moderateRightArticle"] = moderate_right_article.group(1)
+        author = split_response[13]
+        if publishing_bias_rationale:
+            analysis_data["author"] = author
 
-        neutral_article = re.search(r"Neutral Article Recommendation: (https?://[^\s]+)", raw_response)
-        if neutral_article:
-            analysis_data["neutralArticle"] = neutral_article.group(1)
+        article = split_response[14]
+        if publishing_bias_rationale:
+            analysis_data["article"] = article
 
-        moderate_left_article = re.search(r"Moderate Left Article Recommendation: (https?://[^\s]+)", raw_response)
-        if moderate_left_article:
-            analysis_data["moderateLeftArticle"] = moderate_left_article.group(1)
+        # # Extract article recommendations
+        # far_right_article = re.search(r"Far Right Article Recommendation: (https?://[^\s]+)", raw_response)
+        # if far_right_article:
+        #     analysis_data["farRightArticle"] = far_right_article.group(1)
 
-        far_left_article = re.search(r"Far Left Article Recommendation: (https?://[^\s]+)", raw_response)
-        if far_left_article:
-            analysis_data["farLeftArticle"] = far_left_article.group(1)
+        # moderate_right_article = re.search(r"Moderate Right Article Recommendation: (https?://[^\s]+)", raw_response)
+        # if moderate_right_article:
+        #     analysis_data["moderateRightArticle"] = moderate_right_article.group(1)
+
+        # neutral_article = re.search(r"Neutral Article Recommendation: (https?://[^\s]+)", raw_response)
+        # if neutral_article:
+        #     analysis_data["neutralArticle"] = neutral_article.group(1)
+
+        # moderate_left_article = re.search(r"Moderate Left Article Recommendation: (https?://[^\s]+)", raw_response)
+        # if moderate_left_article:
+        #     analysis_data["moderateLeftArticle"] = moderate_left_article.group(1)
+
+        # far_left_article = re.search(r"Far Left Article Recommendation: (https?://[^\s]+)", raw_response)
+        # if far_left_article:
+        #     analysis_data["farLeftArticle"] = far_left_article.group(1)
 
         # Return the structured response as JSON
         return jsonify({

@@ -54,28 +54,28 @@
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 class="text-lg font-semibold mb-2">Political Bias</h3>
           <div class="flex items-center">
-            <span class="font-bold text-blue-600 mr-2">10L</span>
+            <span class="font-bold text-blue-600 mr-2">42L</span>
             <div class="flex-1 h-4 bg-gradient-to-r from-blue-600 via-gray-300 dark:via-gray-600 to-red-600 rounded-full relative">
               <div id="scoreIndicator" class="h-4 w-2 bg-black dark:bg-white rounded-full absolute" style="left: 50%;"></div>
             </div>
-            <span class="font-bold text-red-600 ml-2">10R</span>
+            <span class="font-bold text-red-600 ml-2">42R</span>
           </div>
           <p id="scoreText" class="mt-2 text-center font-medium">Neutral (0)</p>
         </div>
 
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2">Factual Correctness</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400">Accuracy dial here (e.g. green/red meter)</p>
+          <h3 id="factualCorrectnessScore" class="text-lg font-semibold mb-2">Factual Correctness</h3>
+          <p id="factualCorrectnessRationale" class="text-sm text-gray-600 dark:text-gray-400">Accuracy dial here (e.g. green/red meter)</p>
         </div>
 
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2">Author Political Bias</h3>
-          <p id="authorBias" class="text-gray-700 dark:text-gray-300">Loading...</p>
+          <h3 id="authorBiasScore" class="text-lg font-semibold mb-2">Author Political Bias</h3>
+          <p id="authorBiasRationale" class="text-gray-700 dark:text-gray-300">Loading...</p>
         </div>
 
         <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 class="text-lg font-semibold mb-2">Publishing Bias</h3>
-          <p id="publishingBias" class="text-gray-700 dark:text-gray-300">Loading...</p>
+          <h3 id="publishingBiasScore" class="text-lg font-semibold mb-2">Publishing Bias</h3>
+          <p id="publishingBiasRationale" class="text-gray-700 dark:text-gray-300">Loading...</p>
         </div>
       </div>
     </div>
@@ -116,13 +116,9 @@
           const data = await response.json();
 
           if (response.ok) {
+          
 
-            console.log(data.aiResponse.articleText)
-            console.log("------------------------------")
-            console.log(data.aiResponse.authorBiasRationale)
-            console.log("------------------------------")
-            console.log(data.aiResponse.publishingBiasRationale)
-            console.log("------------------------------")
+            console.log(data.aiResponse);
 
             // Hide loading indicator and display the results
             document.getElementById('loadingIndicator').style.display = 'none';
@@ -130,8 +126,19 @@
 
             // Populate the analysis details in the page
             document.getElementById('articleContent').innerText = data.aiResponse.articleText;
-            document.getElementById('authorBias').innerText = data.aiResponse.authorBiasRationale;
-            document.getElementById('publishingBias').innerText = data.aiResponse.publishingBiasRationale;
+            console.log(data.aiResponse.score);
+            document.getElementById('scoreIndicator').style = `left: ${((parseInt(data.aiResponse.score) + 42)/84)*100}%;`
+
+
+            document.getElementById('factualCorrectnessScore').innerText = data.aiResponse.factualCorrectnessScore;
+            document.getElementById('factualCorrectnessRationale').innerText = data.aiResponse.factualCorrectnessRationale;
+
+
+            document.getElementById('authorBiasScore').innerText = data.aiResponse.authorBiasScore;
+            document.getElementById('authorBiasRationale').innerText = data.aiResponse.authorBiasRationale;
+
+            document.getElementById('publishingBiasScore').innerText = data.aiResponse.publishingBiasScore;
+            document.getElementById('publishingBiasRationale').innerText = data.aiResponse.publishingBiasRationale;
 
             // Set political bias score and rationale
             const score = data.aiResponse.politicalBiasScore;
