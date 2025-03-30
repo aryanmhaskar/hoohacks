@@ -123,7 +123,8 @@
             document.getElementById('articleText').style.display = 'block';
 
             // Populate the analysis details in the page
-            document.getElementById('articleContent').innerText = data.aiResponse.article;
+            const articleText = data.aiResponse.article;
+            document.getElementById('articleContent').innerHTML = highlightRandomSentences(articleText);
             document.getElementById('scoreIndicator').style = `left: ${((parseInt(data.aiResponse.politicalBiasScore) + 42)/84)*100}%;`
 
 
@@ -152,6 +153,22 @@
         alert("No URL found in localStorage. Please go back and submit the URL again.");
       }
     };
+
+    function highlightRandomSentences(text) {
+    const sentences = text.match(/[^.!?]+[.!?]/g) || [text]; // Split text into sentences
+    const numToHighlight = Math.min(4, Math.max(3, Math.floor(sentences.length * 0.5))); // Pick 2-3 sentences
+    const selectedIndexes = new Set();
+
+    while (selectedIndexes.size < numToHighlight) {
+        selectedIndexes.add(Math.floor(Math.random() * sentences.length));
+    }
+
+    return sentences
+        .map((sentence, index) =>
+            selectedIndexes.has(index) ? `<span style="color: orange;">${sentence}</span>` : sentence
+        )
+        .join(' ');
+    }
   </script>
 </body>
 </html>
