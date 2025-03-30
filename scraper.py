@@ -106,6 +106,6 @@ def format_output(authors, title, text):
     return formatted_output
 
 # Example Usage
-url = "https://www.foxnews.com/us/feds-alert-tesla-global-day-action-after-nationwide-violence-leads-arrests"
+url = "https://www.nytimes.com/2018/11/19/opinion/economy-trump-red-blue-states.html"
 result = scrape_article(url)
 print(result)

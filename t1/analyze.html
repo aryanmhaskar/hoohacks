@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analysis Results | Political Bias Compass</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-gray-800 shadow py-6">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-indigo-400">
+        <i class="fas fa-compass mr-2 text-indigo-400"></i>
+        Political Bias Analysis
+      </h1>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="container mx-auto px-4 py  py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left: Article Content -->
+      <div class="lg:col-span-2 bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold mb-4 text-white">Article</h2>
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold text-white">Author</h3>
+          <p id="articleAuthor" class="text-gray-300">Paul Krugman</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2 text-white">Full Article Text</h3>
+          <div id="articleText" class="max-h-[600px] overflow-y-auto p-4 bg-gray-700 rounded-lg whitespace-pre-line text-gray-200 leading-relaxed">
+            <div id="articleContent">
+              A little over a year ago, Amazon invited cities and states to offer bids for a proposed second headquarters. This set off a mad scramble over who would gain the dubious privilege of paying large subsidies in return for worsened traffic congestion and higher housing prices. (Answer: New York and greater D.C.)
+
+              But not everyone was in the running. From the beginning, Amazon specified that it would put the new facility only in a Democratic congressional district.
+
+              O.K., that’s not literally what Amazon said. It only limited the competition to “metropolitan areas with more than one million people” and “urban or suburban locations with the potential to attract and retain strong technical talent.” But in the next Congress the great majority of locations meeting those criteria will, in fact, be represented by Democrats.
+
+              Over the past generation, America’s regions have experienced a profound economic divergence. Rich metropolitan areas have gotten even richer, attracting ever more of the nation’s fastest growing industries. Meanwhile, small towns and rural areas have been bypassed, forming a sort of economic rump left behind by the knowledge economy.
+
+              Amazon’s headquarters criteria perfectly illustrate the forces behind that divergence. Businesses in the new economy want access to large pools of highly educated workers, which can be found only in big, rich metropolitan areas. And the location decisions of companies like Amazon draw even more high-skill workers to those areas.
+
+              In other words, there’s a cumulative, self-reinforcing process at work that is, in effect, dividing America into two economies. And this economic division is reflected in political division.
+
+              In 2016, of course, the parts of America that are being left behind voted heavily for Donald Trump. News organizations responded with many, many, many profiles of rural Trump supporters sitting in diners.
+
+              But this was, it turns out, fighting the last war. Trumpism turned America’s lagging regions solid red, but the backlash against Trumpism has turned its growing regions solid blue. Some of the reporters interviewing guys in diners should have been talking to college-educated women in places like California’s Orange County, a former ultraconservative stronghold that, come January, will be represented in Congress entirely by Democrats.
+
+              Why have lagging regions turned right while successful regions turned left? It doesn’t seem to be about economic self-interest. <span style="color: orange;">True, Trump promised to bring back traditional jobs in manufacturing and coal mining — but that promise was never credible.</span> <span style="color: orange;">And the orthodox Republican policy agenda of cutting taxes and shrinking social programs, which is basically what Trump is following in practice, actually hurts lagging regions, which depend a lot on things like food stamps and disability payments, much more than it hurts successful areas.</span>
+
+              <span style="color: orange;">Furthermore, there is little if any support in voting data for the notion that “economic anxiety” drove people to vote for Trump.</span> As documented in “Identity Crisis,” an important new book analyzing the 2016 election, what distinguished Trump voters wasn’t financial hardship but “attitudes related to race and ethnicity.”
+
+              Yet these attitudes aren’t divorced from economic change. Even if they’re personally doing well, many voters in lagging regions have a sense of grievance, a feeling that they’re being disrespected by the glittering elites of superstar cities; this sense of grievance all too easily turns into racial antagonism. <span style="color: orange;">Conversely, however, the transformation of the G.O.P. into a white nationalist party alienates voters — even white voters — in those big, successful metropolitan areas.</span> So the regional economic divide becomes a political chasm.
+
+              Can this chasm be bridged? Honestly, I doubt it.
+
+              <span style="color: orange;">We can and should do a lot to improve the lives of Americans in lagging regions. We can guarantee access to health care and raise their incomes with wage subsidies and other policies (in fact, the earned-income tax credit, which helps low-wage workers, already disproportionally benefits workers in low-income states).</span>
+
+              But restoring these regions’ dynamism is much harder, because it means swimming against a powerful economic tide.
+
+              And the sense of being left behind can make people angry even if their material needs are taken care of. That is what we see, for example, in the former East Germany: Despite huge financial aid from the west and generous social programs, “Ossis” feel aggrieved by what they see as second-class status, and they have given many of their votes to extreme right-wing parties.
+
+              So the bitter division we see in America — the ugliness infecting our politics — may have deep economic roots, and there may be no practical way to make it go away.
+
+              <span style="color: orange;">But the ugliness doesn’t have to win. Most rural white voters still support Trumpism, but they aren’t a majority, and in the midterms a significant number of those voters also broke with the white nationalist agenda.</span>
+
+              <span style="color: orange;">America, then, is a divided nation, and is likely to stay that way for a while. But the better angels of our nature can still prevail.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Bias Info -->
+      <div class="space-y-6">
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold mb-2 text-white">Political Bias</h3>
+          <div class="flex items-center">
+            <span class="font-bold text-blue-500 mr-2">10L</span>
+            <div class="flex-1 h-4 bg-gradient-to-r from-blue-500 via-gray-500 to-red-500 rounded-full relative">
+              <div id="scoreIndicator" class="h-4 w-2 bg-white rounded-full absolute" style="left: 20%;"></div>
+            </div>
+            <span class="font-bold text-red-500 ml-2">10R</span>
+          </div>
+          <p id="scoreText" class="mt-2 text-center font-medium text-gray-300">6L</p>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold mb-2 text-white">Factual Correctness</h3>
+          <p class="text-sm text-gray-400">
+            Mostly accurate with interpretive framing. Krugman’s claims about Amazon’s HQ2 criteria, urban-rural economic divergence, and voting patterns align with data. However, calling the GOP a “white nationalist party” and deeming rural recovery impossible are subjective, reflecting his critical stance.
+          </p>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold mb-2 text-white">Author Political Bias: 7L</h3>
+          <p id="authorBias" class="text-gray-300">
+            Paul Krugman, a Nobel-winning economist, consistently supports progressive policies. In this article, he advocates for healthcare and wage subsidies while criticizing Republican policies, reflecting his left-leaning stance seen in works like *Conscience of a Liberal*.
+          </p>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold mb-2 text-white">Publishing Bias: 4L</h3>
+          <p id="publishingBias" class="text-gray-300">
+            The Times often leans left, especially in its opinion section. It endorses Democrats and its readership skews liberal, per Pew Research. Publishing Krugman’s piece aligns with this editorial stance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 py-4 border-t border-gray-700">
+    <div class="container mx-auto px-4 text-center">
+      <a href="index.html" class="text-indigo-400 hover:text-indigo-300 font-medium">
+        <i class="fas fa-arrow-left mr-2"></i> Analyze Another Article
+      </a>
+    </div>
+  </footer>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92841a6c8f9d4564',t:'MTc0MzMwMDk2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
