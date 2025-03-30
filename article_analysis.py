@@ -61,9 +61,3 @@ Far Left Article Recommendation: [article link]
     
     except Exception as e:
         return f"Analysis Error: {str(e)}"
-
-# Example usage
-article_data = scrape_article("https://www.foxnews.com/media/seattle-city-councilmember-introduces-resolution-acknowledge-failure-defund-police-movement")
-print(article_data)
-analysis = format_bias_analysis(article_data)
-print(analysis)

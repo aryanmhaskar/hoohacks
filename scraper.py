@@ -104,8 +104,3 @@ def format_output(authors, title, text):
     dictionary = {"authors":authors, "title":title, "text":text}
     formatted_output = dictionary
     return formatted_output
-
-# Example Usage
-url = "https://www.foxnews.com/us/feds-alert-tesla-global-day-action-after-nationwide-violence-leads-arrests"
-result = scrape_article(url)
-print(result)

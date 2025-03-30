@@ -1,1 +1,5 @@
 Resources used in HooHacks: 
+-Perplexity Pro API for sentiment analysis
+-Pandas and Scikit learn for binary classification of political affiliation
+-Flask Development Framework
+-
